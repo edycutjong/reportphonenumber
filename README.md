@@ -1,10 +1,13 @@
 # 🛡️ PhoneShield Report Generator
 
+[![Release](https://github.com/edycutjong/reportphonenumber/actions/workflows/release.yml/badge.svg)](https://github.com/edycutjong/reportphonenumber/actions/workflows/release.yml)
+[![PWA Installable](https://img.shields.io/badge/PWA-installable-blueviolet.svg?style=flat&logo=pwa)](https://edycutjong.github.io/reportphonenumber/)
+
 A clean, responsive, single-page Progressive Web App (PWA) that converts Excel (`.xlsx`/`.xls`) or CSV spreadsheets into a grid of visual transaction cards and exports them to Microsoft Word (`.doc`) and high-fidelity PDF (`.pdf`) formats. Built entirely client-side with zero server-side dependencies.
 
 ## 🚀 Live Demo & Hosting
-Since this project is 100% static, it is hosted on **GitHub Pages** at:
-`https://<username>.github.io/<repository-name>/`
+This project is hosted on **GitHub Pages** for instant access:
+👉 **[Live Demo](https://edycutjong.github.io/reportphonenumber/)** (`https://edycutjong.github.io/reportphonenumber/`)
 
 ---
 

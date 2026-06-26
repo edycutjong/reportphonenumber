@@ -1070,8 +1070,8 @@ tr:hover td {
   
   .visual-card {
     display: inline-block !important;
-    width: calc(50% - 20px) !important;
-    margin: 10px 8px !important;
+    width: calc(50% - 10px) !important;
+    margin: 10px 4px !important;
     padding: 20px !important; /* Reduced padding from 30px to 20px */
     vertical-align: top !important;
     border: 1.5px solid #a1a1aa !important; /* Slightly darker border for print clarity */

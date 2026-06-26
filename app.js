@@ -9,7 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initExcelUploader();
   initExportActions();
   initParticleEngine();
+  loadLatestVersion();
 });
+
+async function loadLatestVersion() {
+  try {
+    const response = await fetch('https://api.github.com/repos/edycutjong/reportphonenumber/releases/latest');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.tag_name) {
+        const versionSpan = document.getElementById('appVersion');
+        if (versionSpan) {
+          versionSpan.innerText = data.tag_name;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to fetch latest version from GitHub releases:', err);
+  }
+}
 
 // ==========================================================================
 // 📂 SPREADSHEET PARSER & DRAG-AND-DROP SETUP

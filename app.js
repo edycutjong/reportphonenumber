@@ -296,12 +296,12 @@ function downloadWordReport() {
     const item2 = currentData[i + 1];
 
     let card1HTML = buildWordCardHTML(item1);
-    let card2HTML = item2 ? buildWordCardHTML(item2) : '<div style="width:330pt;"></div>';
+    let card2HTML = item2 ? buildWordCardHTML(item2) : '<table style="width:330pt; border-collapse:collapse;"><tr><td></td></tr></table>';
 
     tableRowsHTML += `
       <tr>
-        <td valign="top" style="padding: 10px; width: 50%;">${card1HTML}</td>
-        <td valign="top" style="padding: 10px; width: 50%;">${card2HTML}</td>
+        <td valign="top" style="padding: 12px; width: 50%;">${card1HTML}</td>
+        <td valign="top" style="padding: 12px; width: 50%;">${card2HTML}</td>
       </tr>
     `;
   }
@@ -314,22 +314,10 @@ function downloadWordReport() {
       <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #e5e7eb; padding: 20px; }
         .card-table { border-collapse: collapse; width: 100%; }
-        .card-container {
-          background-color: #ffffff;
-          border: 1.5px solid #d1d5db;
-          border-radius: 15px;
-          padding: 20px;
-          margin-bottom: 20px;
-        }
-        .card-title-no { font-size: 20pt; font-weight: 800; color: #0b0f19; }
-        .card-title-phone { font-size: 20pt; font-weight: 800; color: #0b0f19; text-align: right; }
-        .blue-divider { height: 3px; background-color: #1a73e8; margin-top: 5px; margin-bottom: 15px; border-radius: 2px; }
-        .pill-success { background-color: #e6f4ea; color: #137333; border: 1px solid #ceead6; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
-        .pill-warning { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
-        .pill-danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
+        p.MsoNormal, li.MsoNormal, div.MsoNormal { margin: 0px; font-size: 11.0pt; font-family: 'Segoe UI', sans-serif; }
       </style>
     </head>
-    <body>
+    <body style="background-color: #e5e7eb; padding: 20px;">
       <table class="card-table">
         ${tableRowsHTML}
       </table>
@@ -353,54 +341,82 @@ function downloadWordReport() {
 function buildWordCardHTML(item) {
   if (!item) return '';
 
-  let pillClass = 'pill-success';
+  let pillBg = '#e6f4ea';
+  let pillColor = '#137333';
+  let pillBorder = '#ceead6';
+  
   const statusLower = item.status.toLowerCase();
   if (statusLower.includes('sukses') || statusLower.includes('success') || statusLower.includes('ok') || statusLower.includes('safe')) {
-    pillClass = 'pill-success';
+    pillBg = '#e6f4ea';
+    pillColor = '#137333';
+    pillBorder = '#ceead6';
   } else if (statusLower.includes('pending') || statusLower.includes('warn') || statusLower.includes('process')) {
-    pillClass = 'pill-warning';
+    pillBg = '#fef3c7';
+    pillColor = '#92400e';
+    pillBorder = '#fde68a';
   } else {
-    pillClass = 'pill-danger';
+    pillBg = '#fee2e2';
+    pillColor = '#991b1b';
+    pillBorder = '#fca5a5';
   }
 
   return `
-    <div class="card-container">
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
-        <tr>
-          <td class="card-title-no" style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; width: 40pt; text-align: left; vertical-align: middle;">${item.no}</td>
-          <td class="card-title-phone" style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: right; vertical-align: middle;">${item.noPelanggan}</td>
-        </tr>
-      </table>
-      <div class="blue-divider"></div>
-      <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt;">
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; width: 120pt; text-align: left;">Tanggal</td>
-          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.tanggal}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Waktu</td>
-          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.waktu}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Provider</td>
-          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.provider}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">No. Pelanggan</td>
-          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.noPelanggan}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Serial Number</td>
-          <td style="color: #1f2937; padding: 4px 0; font-family: 'Courier New', Courier, monospace; text-align: left;">${item.serialNumber}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; color: #4b5563; padding: 6px 0; text-align: left; vertical-align: middle;">Status</td>
-          <td style="padding: 6px 0; text-align: left; vertical-align: middle;">
-            <span class="${pillClass}">${item.status}</span>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <table style="width: 100%; background-color: #ffffff; border: 1.5px solid #d1d5db; border-radius: 15px; border-collapse: collapse; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);">
+      <tr>
+        <td style="padding: 24px;">
+          <!-- Card Header (ID & Phone Number) -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+            <tr>
+              <td style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: left; vertical-align: middle;">${item.no}</td>
+              <td style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: right; vertical-align: middle;">${item.noPelanggan}</td>
+            </tr>
+          </table>
+          
+          <!-- Classic Blue Divider Line -->
+          <table style="width: 100%; border-collapse: collapse; margin-top: 4px; margin-bottom: 16px;">
+            <tr>
+              <td style="height: 3px; background-color: #1a73e8; font-size: 1px; line-height: 1px; border-radius: 2px;">&nbsp;</td>
+            </tr>
+          </table>
+          
+          <!-- Card Body details (Key-Value) -->
+          <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; line-height: 1.6;">
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 5px 0; width: 120pt; text-align: left; vertical-align: middle;">Tanggal</td>
+              <td style="color: #1f2937; padding: 5px 0; text-align: left; vertical-align: middle;">${item.tanggal}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 5px 0; text-align: left; vertical-align: middle;">Waktu</td>
+              <td style="color: #1f2937; padding: 5px 0; text-align: left; vertical-align: middle;">${item.waktu}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 5px 0; text-align: left; vertical-align: middle;">Provider</td>
+              <td style="color: #1f2937; padding: 5px 0; text-align: left; vertical-align: middle;">${item.provider}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 5px 0; text-align: left; vertical-align: middle;">No. Pelanggan</td>
+              <td style="color: #1f2937; padding: 5px 0; text-align: left; vertical-align: middle;">${item.noPelanggan}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 5px 0; text-align: left; vertical-align: middle;">Serial Number</td>
+              <td style="color: #1f2937; padding: 5px 0; font-family: 'Courier New', Courier, monospace; text-align: left; vertical-align: middle;">${item.serialNumber}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; color: #4b5563; padding: 8px 0; text-align: left; vertical-align: middle;">Status</td>
+              <td style="padding: 8px 0; text-align: left; vertical-align: middle;">
+                <!-- Status Pill inside nested table for email/Word client rendering compatibility -->
+                <table align="left" style="background-color: ${pillBg}; border: 1px solid ${pillBorder}; border-collapse: collapse; border-radius: 12px; display: inline-table; margin: 0;">
+                  <tr>
+                    <td style="color: ${pillColor}; font-weight: bold; font-size: 9.5pt; padding: 3px 14px; font-family: 'Segoe UI', Arial, sans-serif; border-radius: 12px; text-align: center; line-height: 1;">
+                      ${item.status}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+    </table>
   `;
 }
 

@@ -1052,6 +1052,10 @@ tr:hover td {
   }
   
   /* Hide scrollbars and reset overflow in print/PDF mode */
+  html, body {
+    overflow: visible !important;
+    height: auto !important;
+  }
   ::-webkit-scrollbar {
     display: none !important;
   }
@@ -1062,17 +1066,17 @@ tr:hover td {
   
   .reports-card-grid {
     display: block !important;
-    width: 100% !important;
-    margin: 0 !important;
+    width: 750px !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     overflow: visible !important;
   }
   
   .visual-card {
     display: inline-block !important;
-    width: calc(50% - 10px) !important;
-    margin: 10px 4px !important;
-    padding: 20px !important; /* Reduced padding from 30px to 20px */
+    width: 360px !important;
+    margin: 8px 6px !important;
+    padding: 18px !important; /* Compact padding */
     vertical-align: top !important;
     border: 1.5px solid #a1a1aa !important; /* Slightly darker border for print clarity */
     box-shadow: none !important;
@@ -1086,23 +1090,24 @@ tr:hover td {
 
   .visual-card-no, 
   .visual-card-phone {
-    font-size: 20px !important; /* Scale down from 26px to prevent phone number clipping */
+    font-size: 18px !important; /* Scaled down to prevent phone number clipping */
   }
 
   .visual-card-divider {
-    margin-bottom: 16px !important;
+    margin-bottom: 12px !important;
+    height: 2px !important;
   }
 
   .visual-card-body {
-    gap: 8px !important;
+    gap: 6px !important;
   }
 
   .visual-card-row {
-    font-size: 13px !important; /* Scale down row text */
+    font-size: 12px !important; /* Compact row text */
   }
 
   .visual-card-label {
-    width: 120px !important; /* Adjust label width for print alignment */
+    width: 110px !important; /* Compact label width */
   }
   
   .pdf-page-break {

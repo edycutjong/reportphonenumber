@@ -425,7 +425,8 @@ function downloadPdfReport() {
       useCORS: true, 
       backgroundColor: '#e5e7eb', // Keep matching screenshot background color
       scrollY: 0,
-      scrollX: 0
+      scrollX: 0,
+      windowWidth: 780
     },
     jsPDF: { 
       unit: 'mm', 

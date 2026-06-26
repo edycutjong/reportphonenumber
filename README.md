@@ -1,4 +1,4 @@
-# 🛡️ PhoneShield Report Generator
+# 📁 PhoneShield Report Generator
 
 [![Release](https://github.com/edycutjong/reportphonenumber/actions/workflows/release.yml/badge.svg)](https://github.com/edycutjong/reportphonenumber/actions/workflows/release.yml)
 [![PWA Installable](https://img.shields.io/badge/PWA-installable-blueviolet.svg?style=flat&logo=pwa)](https://edycutjong.github.io/reportphonenumber/)

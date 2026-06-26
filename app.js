@@ -315,9 +315,6 @@ function downloadWordReport() {
       </style>
     </head>
     <body>
-      <h2 style="font-family: 'Segoe UI', Arial; font-size: 16pt; color: #1e1b4b; text-align: center; margin-bottom: 20px;">
-        PHONESHIELD VISUAL TRANSACTION REPORT
-      </h2>
       <table class="card-table">
         ${tableRowsHTML}
       </table>

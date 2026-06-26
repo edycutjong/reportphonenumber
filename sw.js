@@ -4,7 +4,7 @@
 // ✅ VERIFIED API: Cache API, FetchEvent, install/activate events
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 
-const CACHE_NAME = 'phoneshield-cache-v8';
+const CACHE_NAME = 'phoneshield-cache-v9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

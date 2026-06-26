@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhoneShield - Excel to Word & PDF Card Generator</title>
+  
+  <!-- SEO & Styling Meta -->
+  <meta name="description" content="Instantly convert Excel sheets to beautiful visual cards and export them to Microsoft Word and PDF format in one click.">
+  <meta name="theme-color" content="#1e1b4b">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  
+  <!-- SheetJS (Excel Parser) & html2pdf.js (PDF Generator) CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+  <!-- Confetti Canvas for success alerts -->
+  <canvas id="effects-canvas"></canvas>
+
+  <header>
+    <div class="logo-container">
+      <img src="icon-192.png" alt="PhoneShield Logo" class="logo-icon">
+      <span class="logo-text">PHONESHIELD REPORT GENERATOR</span>
+    </div>
+    
+    <div style="font-size: 13px; font-weight: 600; color: var(--primary); font-family: 'Orbitron', sans-serif;">
+      EXCEL ➔ WORD / PDF
+    </div>
+  </header>
+
+  <main>
+    <div class="glass-panel" style="margin-bottom: 30px; text-align: center;">
+      <h1 style="font-size: 32px; margin-bottom: 8px;">Excel to Card Converter</h1>
+      <p class="subtitle" style="margin-bottom: 24px;">Upload your spreadsheet to automatically format records into visual cards and export to Microsoft Word or PDF.</p>
+
+      <!-- Drag & Drop Uploader -->
+      <div id="dropZone" style="
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 50px 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        margin-bottom: 10px;
+      ">
+        <div style="font-size: 50px; margin-bottom: 12px;">📁</div>
+        <div style="font-weight: 700; font-size: 18px; margin-bottom: 6px; color: var(--text-main);">Drag & Drop your Excel (.xlsx, .xls) or CSV here</div>
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">or click to browse local files</div>
+        <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" style="display: none;">
+        <div style="display: flex; justify-content: center; gap: 12px; position: relative; z-index: 10;">
+          <button type="button" class="btn-secondary" style="padding: 10px 20px; font-size: 14px; pointer-events: none;">Browse Spreadsheet</button>
+          <button type="button" id="loadExampleBtn" class="btn-secondary" style="padding: 10px 20px; font-size: 14px; background: rgba(6, 182, 212, 0.1); border-color: var(--primary); color: var(--primary); cursor: pointer;">⚡ Load test.xlsx</button>
+        </div>
+      </div>
+      <div id="fileInfoText" style="font-size: 13px; color: var(--text-muted); margin-top: 12px;"></div>
+    </div>
+
+    <!-- Export Action Controls (Hidden until file is loaded) -->
+    <div id="exportControls" class="glass-panel" style="display: none; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; animation: fadeIn var(--transition-normal);">
+      <div style="text-align: left;">
+        <h3 style="font-size: 16px; margin-bottom: 4px; color: var(--primary);">Document Ready</h3>
+        <p style="color: var(--text-muted); font-size: 13px; margin: 0;">Export the cards below to your preferred document format.</p>
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <button id="downloadWordBtn" class="btn-primary" style="background: linear-gradient(135deg, #1b365d, #2563eb); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);">
+          📝 Download Word (.doc)
+        </button>
+        <button id="downloadPdfBtn" class="btn-primary" style="background: linear-gradient(135deg, #7c3aed, #a855f7); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);">
+          📄 Download PDF (.pdf)
+        </button>
+      </div>
+    </div>
+
+    <!-- Visual Card Preview Grid (Hidden until file is loaded) -->
+    <div id="previewSection" style="display: none; text-align: center; animation: fadeIn var(--transition-normal);">
+      <h2 style="font-size: 20px; margin-bottom: 24px; color: var(--text-main); font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 1px;">
+        📊 Visual Report Preview
+      </h2>
+      
+      <!-- Styled container matching the screenshot layout -->
+      <div style="background: #e5e7eb; padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: inset 0 2px 8px rgba(0,0,0,0.15);">
+        <div id="reportsCardGrid" class="reports-card-grid">
+          <!-- Visual Cards will be injected here -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: 30px; border-top: 1px solid var(--border-color); font-size: 12px; color: var(--text-muted); margin-top: 50px;">
+    <div>PhoneShield Report Generator &copy; 2026. Processed safely entirely in-browser.</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

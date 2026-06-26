@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Rounded Background -->
+  <rect width="512" height="512" rx="120" fill="#1e1b4b"/>
+  
+  <!-- Outer glowing shield outline (cyan) -->
+  <path d="M256,70 C330,70 380,100 395,190 C395,290 320,380 256,430 C192,380 117,290 117,190 C132,100 182,70 256,70 Z" 
+        fill="none" stroke="#06b6d4" stroke-width="20" stroke-linejoin="round" />
+  
+  <!-- Inner filled shield (glowing cyan) -->
+  <path d="M256,95 C315,95 355,120 367,190 C367,270 305,345 256,388 C207,345 145,270 145,190 C157,120 197,95 256,95 Z" 
+        fill="#06b6d4" />
+  
+  <!-- Phone Handset Silhouette inside shield (dark indigo) -->
+  <path d="M220,180 C215,180 210,185 210,190 C210,240 240,290 280,310 C320,330 325,320 330,315 C335,310 340,305 342,300 C345,295 340,290 335,287 C325,282 315,275 310,270 C305,265 303,267 298,272 C293,277 288,280 282,275 C272,267 255,250 247,240 C242,234 245,229 250,224 C255,219 257,217 252,212 C247,207 240,197 235,187 C232,182 227,177 222,177 Z" 
+        fill="#1e1b4b" transform="scale(1.2) translate(-43, -40)" />
+</svg>

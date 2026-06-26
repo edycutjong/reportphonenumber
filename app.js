@@ -444,18 +444,97 @@ async function downloadPdfReport() {
   `;
   document.body.appendChild(tempContainer);
 
-  // 2. Clone cards into pdf-page-container groups of exactly 6 cards
+  // 2. Clone cards into pdf-page-container groups of exactly 8 cards inside a 2-column table
   const originalCards = document.querySelectorAll('#reportsCardGrid .visual-card');
   let currentPageContainer = null;
+  let currentTable = null;
+  let currentTableRow = null;
 
   originalCards.forEach((card, index) => {
-    if (index % 6 === 0) {
+    if (index % 8 === 0) {
       currentPageContainer = document.createElement('div');
       currentPageContainer.className = 'pdf-page-container';
+      // Style page container with inline styles so html2canvas ignores body class nesting issues
+      currentPageContainer.style.cssText = `
+        display: block !important;
+        width: 750px !important;
+        height: 1060px !important;
+        margin: 0 auto !important;
+        padding: 25px 20px !important;
+        box-sizing: border-box !important;
+        background: #e5e7eb !important;
+        overflow: hidden !important;
+      `;
       tempContainer.appendChild(currentPageContainer);
+
+      currentTable = document.createElement('table');
+      currentTable.style.cssText = 'width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0; padding: 0;';
+      currentPageContainer.appendChild(currentTable);
     }
+
+    if (index % 2 === 0) {
+      currentTableRow = document.createElement('tr');
+      currentTable.appendChild(currentTableRow);
+    }
+
+    const cell = document.createElement('td');
+    cell.style.cssText = 'width: 50%; padding: 8px 10px; vertical-align: top;';
+
     const clonedCard = card.cloneNode(true);
-    currentPageContainer.appendChild(clonedCard);
+    // Apply precise card inline styles
+    clonedCard.style.cssText = `
+      display: block !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 14px 16px !important;
+      box-sizing: border-box !important;
+      border: 1.5px solid #a1a1aa !important;
+      border-radius: 16px !important;
+      box-shadow: none !important;
+      background: #ffffff !important;
+      color: #000000 !important;
+      overflow: hidden !important;
+    `;
+
+    // Scale card child sizes inline for perfect PDF fit
+    const cardNo = clonedCard.querySelector('.visual-card-no');
+    if (cardNo) cardNo.style.fontSize = '18px';
+    const cardPhone = clonedCard.querySelector('.visual-card-phone');
+    if (cardPhone) cardPhone.style.fontSize = '18px';
+    const cardDivider = clonedCard.querySelector('.visual-card-divider');
+    if (cardDivider) {
+      cardDivider.style.marginBottom = '10px';
+      cardDivider.style.height = '2px';
+    }
+    const cardBody = clonedCard.querySelector('.visual-card-body');
+    if (cardBody) cardBody.style.gap = '5px';
+    
+    const cardRows = clonedCard.querySelectorAll('.visual-card-row');
+    cardRows.forEach(row => {
+      row.style.fontSize = '11px';
+    });
+    const cardLabels = clonedCard.querySelectorAll('.visual-card-label');
+    cardLabels.forEach(lbl => {
+      lbl.style.width = '100px';
+    });
+
+    cell.appendChild(clonedCard);
+    currentTableRow.appendChild(cell);
+  });
+
+  // Ensure last row is properly padded with an empty cell if it contains only one card
+  const allPages = tempContainer.querySelectorAll('.pdf-page-container');
+  allPages.forEach(page => {
+    const table = page.querySelector('table');
+    if (table) {
+      const rows = table.querySelectorAll('tr');
+      const lastRow = rows[rows.length - 1];
+      if (lastRow && lastRow.children.length === 1) {
+        const emptyCell = document.createElement('td');
+        emptyCell.style.cssText = 'width: 50%; padding: 8px 10px;';
+        lastRow.appendChild(emptyCell);
+      }
+    }
   });
 
   const pageContainers = tempContainer.querySelectorAll('.pdf-page-container');

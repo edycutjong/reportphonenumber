@@ -307,7 +307,7 @@ function downloadWordReport() {
         .card-title-phone { font-size: 20pt; font-weight: bold; color: #0f172a; text-align: right; }
         .blue-divider { height: 3px; background-color: #1a73e8; margin-top: 5px; margin-bottom: 15px; border-radius: 2px; }
         .item-row { margin-bottom: 8px; font-size: 11pt; }
-        .item-label { font-weight: bold; color: #4b5563; width: 130pt; display: inline-block; }
+        .item-label { font-weight: bold; color: #4b5563; width: 130pt; display: inline-block; text-align: left; }
         .item-value { color: #111827; }
         .pill-success { background-color: #e6f4ea; color: #137333; border: 1px solid #ceead6; padding: 2px 14px; border-radius: 12px; font-weight: bold; }
         .pill-warning { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 14px; border-radius: 12px; font-weight: bold; }

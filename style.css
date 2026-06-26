@@ -1150,3 +1150,62 @@ tr:hover td {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   📄 PDF GENERATION STYLES (Captured by html2canvas in screen mode)
+   ========================================================================== */
+.pdf-mode {
+  overflow: visible !important;
+}
+
+.pdf-mode #effects-canvas {
+  display: none !important;
+}
+
+.pdf-mode .pdf-page-container {
+  display: block !important;
+  width: 750px !important;
+  height: 1060px !important; /* Fixed A4 portrait aspect ratio (750x1060 ≈ 210x297) */
+  margin: 0 auto !important;
+  padding: 30px 10px !important;
+  box-sizing: border-box !important;
+  background: #e5e7eb !important; /* Keep matching screenshot background color */
+  overflow: hidden !important;
+}
+
+.pdf-mode .visual-card {
+  display: inline-block !important;
+  width: 350px !important; /* Fits 2 side-by-side in 750px container with margins */
+  margin: 12px 10px !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  vertical-align: top !important;
+  border: 1.5px solid #a1a1aa !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+}
+
+.pdf-mode .visual-card-no, 
+.pdf-mode .visual-card-phone {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+.pdf-mode .visual-card-divider {
+  margin-bottom: 12px !important;
+  height: 2px !important;
+}
+
+.pdf-mode .visual-card-body {
+  gap: 6px !important;
+}
+
+.pdf-mode .visual-card-row {
+  font-size: 11px !important;
+}
+
+.pdf-mode .visual-card-label {
+  width: 100px !important;
+}

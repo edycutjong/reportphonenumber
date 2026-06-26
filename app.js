@@ -296,12 +296,12 @@ function downloadWordReport() {
     const item2 = currentData[i + 1];
 
     let card1HTML = buildWordCardHTML(item1);
-    let card2HTML = item2 ? buildWordCardHTML(item2) : '<table style="width:330pt; border-collapse:collapse;"><tr><td></td></tr></table>';
+    let card2HTML = item2 ? buildWordCardHTML(item2) : '<table border="0" cellspacing="0" cellpadding="0" style="width:100%; border-collapse:collapse; table-layout:fixed;"><tr><td></td></tr></table>';
 
     tableRowsHTML += `
       <tr>
-        <td valign="top" style="padding: 12px; width: 50%;">${card1HTML}</td>
-        <td valign="top" style="padding: 12px; width: 50%;">${card2HTML}</td>
+        <td valign="top" width="50%" style="padding: 12px; width: 50%; border: none;">${card1HTML}</td>
+        <td valign="top" width="50%" style="padding: 12px; width: 50%; border: none;">${card2HTML}</td>
       </tr>
     `;
   }
@@ -317,8 +317,8 @@ function downloadWordReport() {
         p.MsoNormal, li.MsoNormal, div.MsoNormal { margin: 0px; font-size: 11.0pt; font-family: 'Segoe UI', sans-serif; }
       </style>
     </head>
-    <body style="background-color: #e5e7eb; padding: 20px;">
-      <table class="card-table">
+    <body style="background-color: #e5e7eb; padding: 20px;" bgcolor="#e5e7eb">
+      <table class="card-table" border="0" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         ${tableRowsHTML}
       </table>
     </body>
@@ -361,11 +361,11 @@ function buildWordCardHTML(item) {
   }
 
   return `
-    <table style="width: 100%; background-color: #ffffff; border: 1.5px solid #d1d5db; border-radius: 15px; border-collapse: collapse; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);">
+    <table border="1" bordercolor="#d1d5db" cellspacing="0" cellpadding="0" style="width: 100%; background-color: #ffffff; border: 1.5px solid #d1d5db; border-radius: 15px; border-collapse: collapse; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);">
       <tr>
-        <td style="padding: 24px;">
+        <td style="padding: 24px; background-color: #ffffff;" bgcolor="#ffffff">
           <!-- Card Header (ID & Phone Number) -->
-          <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+          <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
             <tr>
               <td style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: left; vertical-align: middle;">${item.no}</td>
               <td style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: right; vertical-align: middle;">${item.noPelanggan}</td>
@@ -373,14 +373,14 @@ function buildWordCardHTML(item) {
           </table>
           
           <!-- Classic Blue Divider Line -->
-          <table style="width: 100%; border-collapse: collapse; margin-top: 4px; margin-bottom: 16px;">
+          <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; margin-top: 4px; margin-bottom: 16px;">
             <tr>
-              <td style="height: 3px; background-color: #1a73e8; font-size: 1px; line-height: 1px; border-radius: 2px;">&nbsp;</td>
+              <td bgcolor="#1a73e8" style="height: 3px; background-color: #1a73e8; font-size: 1px; line-height: 1px; border-radius: 2px;">&nbsp;</td>
             </tr>
           </table>
           
           <!-- Card Body details (Key-Value) -->
-          <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; line-height: 1.6;">
+          <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; line-height: 1.6;">
             <tr>
               <td style="font-weight: bold; color: #4b5563; padding: 5px 0; width: 120pt; text-align: left; vertical-align: middle;">Tanggal</td>
               <td style="color: #1f2937; padding: 5px 0; text-align: left; vertical-align: middle;">${item.tanggal}</td>
@@ -405,9 +405,9 @@ function buildWordCardHTML(item) {
               <td style="font-weight: bold; color: #4b5563; padding: 8px 0; text-align: left; vertical-align: middle;">Status</td>
               <td style="padding: 8px 0; text-align: left; vertical-align: middle;">
                 <!-- Status Pill inside nested table for email/Word client rendering compatibility -->
-                <table align="left" style="background-color: ${pillBg}; border: 1px solid ${pillBorder}; border-collapse: collapse; border-radius: 12px; display: inline-table; margin: 0;">
+                <table align="left" border="1" bordercolor="${pillBorder}" bgcolor="${pillBg}" cellspacing="0" cellpadding="0" style="background-color: ${pillBg}; border: 1px solid ${pillBorder}; border-collapse: collapse; border-radius: 12px; display: inline-table; margin: 0;">
                   <tr>
-                    <td style="color: ${pillColor}; font-weight: bold; font-size: 9.5pt; padding: 3px 14px; font-family: 'Segoe UI', Arial, sans-serif; border-radius: 12px; text-align: center; line-height: 1;">
+                    <td style="color: ${pillColor}; font-weight: bold; font-size: 9.5pt; padding: 3px 14px; font-family: 'Segoe UI', Arial, sans-serif; border-radius: 12px; text-align: center; line-height: 1; background-color: ${pillBg};" bgcolor="${pillBg}">
                       ${item.status}
                     </td>
                   </tr>
@@ -416,6 +416,7 @@ function buildWordCardHTML(item) {
             </tr>
           </table>
         </td>
+      </tr>
     </table>
   `;
 }

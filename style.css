@@ -1163,23 +1163,25 @@ tr:hover td {
 }
 
 .pdf-mode .pdf-page-container {
-  display: block !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 20px !important;
   width: 750px !important;
   height: 1060px !important; /* Fixed A4 portrait aspect ratio (750x1060 ≈ 210x297) */
   margin: 0 auto !important;
-  padding: 30px 10px !important;
+  padding: 40px 20px !important;
   box-sizing: border-box !important;
   background: #e5e7eb !important; /* Keep matching screenshot background color */
+  align-content: start !important;
   overflow: hidden !important;
 }
 
 .pdf-mode .visual-card {
-  display: inline-block !important;
-  width: 350px !important; /* Fits 2 side-by-side in 750px container with margins */
-  margin: 12px 10px !important;
+  display: block !important;
+  width: 100% !important; /* Takes full cell width of the 2-column grid */
+  margin: 0 !important; /* Controlled by grid gap */
   padding: 16px !important;
   box-sizing: border-box !important;
-  vertical-align: top !important;
   border: 1.5px solid #a1a1aa !important;
   box-shadow: none !important;
   background: #ffffff !important;

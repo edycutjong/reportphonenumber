@@ -395,7 +395,7 @@ function downloadPdfReport() {
   
   // Set options for html2pdf rendering
   const opt = {
-    margin: 15,
+    margin: 10,
     filename: `PhoneShield_Report_${new Date().toISOString().split('T')[0]}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -406,7 +406,11 @@ function downloadPdfReport() {
     jsPDF: { 
       unit: 'mm', 
       format: 'a4', 
-      orientation: 'landscape' // Fits 2x2 grid cards layouts perfectly
+      orientation: 'landscape' // Fits 2-column layouts perfectly
+    },
+    pagebreak: { 
+      mode: ['css', 'avoid-all'], 
+      avoid: '.visual-card' 
     }
   };
 

@@ -1048,18 +1048,23 @@ tr:hover td {
   }
   
   .reports-card-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
+    display: block !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
   
   .visual-card {
+    display: inline-block !important;
+    width: calc(50% - 16px) !important;
+    margin: 8px !important;
+    vertical-align: top !important;
     border: 1.5px solid #a1a1aa !important; /* Slightly darker border for print clarity */
     box-shadow: none !important;
     background: #ffffff !important;
     color: #000000 !important;
     page-break-inside: avoid !important;
+    break-inside: avoid !important;
     transform: none !important;
   }
 }

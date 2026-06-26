@@ -829,6 +829,10 @@ tr:hover td {
   z-index: 99999;
 }
 
+.pdf-page-break {
+  display: none;
+}
+
 /* ==========================================================================
    🖼️ VISUAL CARDS GRID (Matching Screenshot)
    ========================================================================== */
@@ -1066,5 +1070,14 @@ tr:hover td {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     transform: none !important;
+  }
+
+  .pdf-page-break {
+    display: block !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }

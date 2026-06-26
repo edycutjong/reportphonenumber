@@ -205,7 +205,7 @@ function renderCardsGrid() {
   if (!grid) return;
   grid.innerHTML = '';
 
-  currentData.forEach(item => {
+  currentData.forEach((item, index) => {
     const card = document.createElement('div');
     card.className = 'visual-card';
 
@@ -256,6 +256,13 @@ function renderCardsGrid() {
       </div>
     `;
     grid.appendChild(card);
+
+    // Insert page break after every 6th card (for PDF pagination)
+    if ((index + 1) % 6 === 0 && index !== currentData.length - 1) {
+      const pageBreak = document.createElement('div');
+      pageBreak.className = 'pdf-page-break';
+      grid.appendChild(pageBreak);
+    }
   });
 }
 
@@ -405,7 +412,7 @@ function downloadPdfReport() {
     jsPDF: { 
       unit: 'mm', 
       format: 'a4', 
-      orientation: 'landscape' // Fits 2-column layouts perfectly
+      orientation: 'portrait' // Fits 2-column portrait layouts (3 rows of 2 cards = 6 cards) perfectly
     },
     pagebreak: { 
       mode: ['css', 'legacy'], 

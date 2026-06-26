@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initExportActions();
   initParticleEngine();
   loadLatestVersion();
+  registerServiceWorker();
 });
 
 async function loadLatestVersion() {
@@ -720,5 +721,31 @@ function emitConfetti(canvasWidth, count = 60) {
         shrink: false
       }
     ));
+  }
+}
+
+// ==========================================================================
+// 📦 PWA SERVICE WORKER REGISTRATION & AUTO-UPDATE
+// ==========================================================================
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => {
+        console.log('Service Worker registered successfully:', reg.scope);
+        reg.onupdatefound = () => {
+          const installingWorker = reg.installing;
+          installingWorker.onstatechange = () => {
+            if (installingWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                console.log('New update detected. Auto-refreshing app...');
+                window.location.reload();
+              }
+            }
+          };
+        };
+      })
+      .catch((err) => {
+        console.warn('Service Worker registration failed:', err);
+      });
   }
 }

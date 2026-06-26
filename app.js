@@ -401,7 +401,9 @@ function downloadPdfReport() {
     html2canvas: { 
       scale: 2, 
       useCORS: true, 
-      backgroundColor: '#e5e7eb' // Keep matching screenshot background color
+      backgroundColor: '#e5e7eb', // Keep matching screenshot background color
+      scrollY: 0,
+      scrollX: 0
     },
     jsPDF: { 
       unit: 'mm', 
@@ -409,7 +411,7 @@ function downloadPdfReport() {
       orientation: 'landscape' // Fits 2-column layouts perfectly
     },
     pagebreak: { 
-      mode: ['css', 'avoid-all'], 
+      mode: ['css', 'legacy'], 
       avoid: '.visual-card' 
     }
   };

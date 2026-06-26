@@ -312,24 +312,21 @@ function downloadWordReport() {
       <meta charset="utf-8">
       <title>PhoneShield Report</title>
       <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #ffffff; margin: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #e5e7eb; padding: 20px; }
         .card-table { border-collapse: collapse; width: 100%; }
         .card-container {
           background-color: #ffffff;
-          border: 2px solid #d1d5db;
+          border: 1.5px solid #d1d5db;
           border-radius: 15px;
           padding: 20px;
           margin-bottom: 20px;
         }
-        .card-title-no { font-size: 20pt; font-weight: bold; color: #0f172a; }
-        .card-title-phone { font-size: 20pt; font-weight: bold; color: #0f172a; text-align: right; }
+        .card-title-no { font-size: 20pt; font-weight: 800; color: #0b0f19; }
+        .card-title-phone { font-size: 20pt; font-weight: 800; color: #0b0f19; text-align: right; }
         .blue-divider { height: 3px; background-color: #1a73e8; margin-top: 5px; margin-bottom: 15px; border-radius: 2px; }
-        .item-row { margin-bottom: 8px; font-size: 11pt; }
-        .item-label { font-weight: bold; color: #4b5563; width: 130pt; display: inline-block; text-align: left; }
-        .item-value { color: #111827; }
-        .pill-success { background-color: #e6f4ea; color: #137333; border: 1px solid #ceead6; padding: 2px 14px; border-radius: 12px; font-weight: bold; }
-        .pill-warning { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 14px; border-radius: 12px; font-weight: bold; }
-        .pill-danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 2px 14px; border-radius: 12px; font-weight: bold; }
+        .pill-success { background-color: #e6f4ea; color: #137333; border: 1px solid #ceead6; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
+        .pill-warning { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
+        .pill-danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 3px 15px; border-radius: 12px; font-weight: bold; font-size: 9pt; }
       </style>
     </head>
     <body>
@@ -368,37 +365,41 @@ function buildWordCardHTML(item) {
 
   return `
     <div class="card-container">
-      <table style="width: 100%; border-collapse: collapse;">
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
         <tr>
-          <td class="card-title-no" style="font-family: Arial; font-weight: bold; font-size: 20pt; color: #000000; width: 30pt;">${item.no}</td>
-          <td class="card-title-phone" style="font-family: Arial; font-weight: bold; font-size: 20pt; color: #000000; text-align: right;">${item.noPelanggan}</td>
+          <td class="card-title-no" style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; width: 40pt; text-align: left; vertical-align: middle;">${item.no}</td>
+          <td class="card-title-phone" style="font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; font-size: 20pt; color: #0b0f19; text-align: right; vertical-align: middle;">${item.noPelanggan}</td>
         </tr>
       </table>
       <div class="blue-divider"></div>
-      <div class="item-row">
-        <span class="item-label">Tanggal</span>
-        <span class="item-value">${item.tanggal}</span>
-      </div>
-      <div class="item-row" style="margin-top: 6px;">
-        <span class="item-label">Waktu</span>
-        <span class="item-value">${item.waktu}</span>
-      </div>
-      <div class="item-row" style="margin-top: 6px;">
-        <span class="item-label">Provider</span>
-        <span class="item-value">${item.provider}</span>
-      </div>
-      <div class="item-row" style="margin-top: 6px;">
-        <span class="item-label">No. Pelanggan</span>
-        <span class="item-value">${item.noPelanggan}</span>
-      </div>
-      <div class="item-row" style="margin-top: 6px;">
-        <span class="item-label">Serial Number</span>
-        <span class="item-value" style="font-family: Courier New, monospace;">${item.serialNumber}</span>
-      </div>
-      <div class="item-row" style="margin-top: 10px;">
-        <span class="item-label">Status</span>
-        <span class="${pillClass}">${item.status}</span>
-      </div>
+      <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt;">
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; width: 120pt; text-align: left;">Tanggal</td>
+          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.tanggal}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Waktu</td>
+          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.waktu}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Provider</td>
+          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.provider}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">No. Pelanggan</td>
+          <td style="color: #1f2937; padding: 4px 0; text-align: left;">${item.noPelanggan}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 4px 0; text-align: left;">Serial Number</td>
+          <td style="color: #1f2937; padding: 4px 0; font-family: 'Courier New', Courier, monospace; text-align: left;">${item.serialNumber}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; color: #4b5563; padding: 6px 0; text-align: left; vertical-align: middle;">Status</td>
+          <td style="padding: 6px 0; text-align: left; vertical-align: middle;">
+            <span class="${pillClass}">${item.status}</span>
+          </td>
+        </tr>
+      </table>
     </div>
   `;
 }

@@ -463,7 +463,7 @@ async function downloadPdfReport() {
         margin: 0 auto !important;
         padding: 25px 20px !important;
         box-sizing: border-box !important;
-        background: #e5e7eb !important;
+        background: #ffffff !important;
         overflow: hidden !important;
       `;
       tempContainer.appendChild(currentPageContainer);
@@ -568,7 +568,7 @@ async function downloadPdfReport() {
       const canvas = await html2canvas(container, {
         scale: 2,
         useCORS: true,
-        backgroundColor: '#e5e7eb', // Keep matching screenshot background color
+        backgroundColor: '#ffffff', // White background to save printer ink
         scrollY: 0,
         scrollX: 0,
         windowWidth: 780

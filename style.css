@@ -1171,7 +1171,7 @@ tr:hover td {
   margin: 0 auto !important;
   padding: 40px 20px !important;
   box-sizing: border-box !important;
-  background: #e5e7eb !important; /* Keep matching screenshot background color */
+  background: #ffffff !important; /* White background to save printer ink */
   align-content: start !important;
   overflow: hidden !important;
 }

@@ -223,7 +223,24 @@ function renderCardsGrid() {
   if (!grid) return;
   grid.innerHTML = '';
 
+  let pageContainer = null;
+
   currentData.forEach((item, index) => {
+    if (index % 6 === 0) {
+      const pageNum = Math.floor(index / 6) + 1;
+      
+      // Page indicator for screen view
+      const indicator = document.createElement('div');
+      indicator.className = 'screen-page-indicator';
+      indicator.innerText = `PAGE ${pageNum}`;
+      grid.appendChild(indicator);
+
+      // Create new page container
+      pageContainer = document.createElement('div');
+      pageContainer.className = 'pdf-page-container';
+      grid.appendChild(pageContainer);
+    }
+
     const card = document.createElement('div');
     card.className = 'visual-card';
 
@@ -273,14 +290,7 @@ function renderCardsGrid() {
         </div>
       </div>
     `;
-    grid.appendChild(card);
-
-    // Insert page break after every 6th card (for PDF pagination)
-    if ((index + 1) % 6 === 0 && index !== currentData.length - 1) {
-      const pageBreak = document.createElement('div');
-      pageBreak.className = 'pdf-page-break';
-      grid.appendChild(pageBreak);
-    }
+    pageContainer.appendChild(card);
   });
 }
 
@@ -410,46 +420,63 @@ function buildWordCardHTML(item) {
   `;
 }
 
-function downloadPdfReport() {
+async function downloadPdfReport() {
   if (currentData.length === 0) return;
 
-  const element = document.getElementById('reportsCardGrid');
-  
-  // Set options for html2pdf rendering
-  const opt = {
-    margin: 10,
-    filename: `PhoneShield_Report_${new Date().toISOString().split('T')[0]}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2, 
-      useCORS: true, 
-      backgroundColor: '#e5e7eb', // Keep matching screenshot background color
-      scrollY: 0,
-      scrollX: 0,
-      windowWidth: 780
-    },
-    jsPDF: { 
-      unit: 'mm', 
-      format: 'a4', 
-      orientation: 'portrait' // Fits 2-column portrait layouts (3 rows of 2 cards = 6 cards) perfectly
-    },
-    pagebreak: { 
-      mode: ['css', 'legacy'], 
-      avoid: '.visual-card' 
-    }
-  };
+  const pageContainers = document.querySelectorAll('.pdf-page-container');
+  if (pageContainers.length === 0) return;
 
-  showToast("Compiling PDF report cards...");
-  
-  // Generate PDF
-  html2pdf().from(element).set(opt).save()
-    .then(() => {
-      showToast("PDF report cards downloaded!");
-    })
-    .catch(err => {
-      console.error(err);
-      alert('Error generating PDF: ' + err.message);
-    });
+  showToast("Compiling PDF report (page-by-page)...");
+
+  // Retrieve jsPDF constructor from bundle
+  const { jsPDF } = window.jspdf || window;
+  if (!jsPDF) {
+    alert("jsPDF library not found. Please verify the CDN script is loaded.");
+    return;
+  }
+
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+
+  try {
+    for (let i = 0; i < pageContainers.length; i++) {
+      const container = pageContainers[i];
+      
+      // Update toast notifications for progress monitoring on larger files
+      if (pageContainers.length > 3) {
+        showToast(`Processing page ${i + 1} of ${pageContainers.length}...`);
+      }
+
+      const canvas = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#e5e7eb', // Keep matching screenshot background color
+        scrollY: 0,
+        scrollX: 0,
+        windowWidth: 780
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+      if (i > 0) {
+        pdf.addPage();
+      }
+
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+    }
+
+    pdf.save(`PhoneShield_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+    showToast("PDF report cards downloaded!");
+  } catch (err) {
+    console.error(err);
+    alert('Error generating PDF: ' + err.message);
+  }
 }
 
 // ==========================================================================

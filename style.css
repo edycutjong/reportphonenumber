@@ -829,6 +829,28 @@ tr:hover td {
   z-index: 99999;
 }
 
+.pdf-page-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  grid-column: 1 / -1; /* Spans full grid width in browser screen */
+  margin-bottom: 40px;
+}
+
+.screen-page-indicator {
+  grid-column: 1 / -1;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: left;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
 .pdf-page-break {
   display: none;
 }
@@ -1110,12 +1132,21 @@ tr:hover td {
     width: 110px !important; /* Compact label width */
   }
   
-  .pdf-page-break {
+  .pdf-page-container {
     display: block !important;
+    width: 750px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
     page-break-after: always !important;
     break-after: page !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .screen-page-indicator {
+    display: none !important;
+  }
+  
+  .pdf-page-break {
+    display: none !important;
   }
 }

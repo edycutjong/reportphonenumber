@@ -55,6 +55,14 @@ function initExcelUploader() {
       loadExampleFile();
     });
   }
+
+  const loadStressBtn = document.getElementById('loadStressBtn');
+  if (loadStressBtn) {
+    loadStressBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      loadStressFile();
+    });
+  }
 }
 
 async function loadExampleFile() {
@@ -71,6 +79,25 @@ async function loadExampleFile() {
     handleSpreadsheet(file);
   } catch (err) {
     alert("Error loading example file: " + err.message);
+    const fileTextEl = document.getElementById('fileInfoText');
+    if (fileTextEl) fileTextEl.innerText = '';
+  }
+}
+
+async function loadStressFile() {
+  try {
+    const fileTextEl = document.getElementById('fileInfoText');
+    if (fileTextEl) fileTextEl.innerText = 'Fetching test_stress.xlsx from workspace...';
+    
+    const response = await fetch('test_stress.xlsx');
+    if (!response.ok) {
+      throw new Error('test_stress.xlsx not found. Please make sure test_stress.xlsx exists in the workspace folder.');
+    }
+    const blob = await response.blob();
+    const file = new File([blob], "test_stress.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    handleSpreadsheet(file);
+  } catch (err) {
+    alert("Error loading stress test file: " + err.message);
     const fileTextEl = document.getElementById('fileInfoText');
     if (fileTextEl) fileTextEl.innerText = '';
   }

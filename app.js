@@ -223,24 +223,7 @@ function renderCardsGrid() {
   if (!grid) return;
   grid.innerHTML = '';
 
-  let pageContainer = null;
-
-  currentData.forEach((item, index) => {
-    if (index % 6 === 0) {
-      const pageNum = Math.floor(index / 6) + 1;
-      
-      // Page indicator for screen view
-      const indicator = document.createElement('div');
-      indicator.className = 'screen-page-indicator';
-      indicator.innerText = `PAGE ${pageNum}`;
-      grid.appendChild(indicator);
-
-      // Create new page container
-      pageContainer = document.createElement('div');
-      pageContainer.className = 'pdf-page-container';
-      grid.appendChild(pageContainer);
-    }
-
+  currentData.forEach(item => {
     const card = document.createElement('div');
     card.className = 'visual-card';
 
@@ -290,7 +273,7 @@ function renderCardsGrid() {
         </div>
       </div>
     `;
-    pageContainer.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
@@ -423,9 +406,6 @@ function buildWordCardHTML(item) {
 async function downloadPdfReport() {
   if (currentData.length === 0) return;
 
-  const pageContainers = document.querySelectorAll('.pdf-page-container');
-  if (pageContainers.length === 0) return;
-
   showToast("Compiling PDF report (page-by-page)...");
 
   // Retrieve jsPDF constructor from bundle
@@ -434,6 +414,41 @@ async function downloadPdfReport() {
     alert("jsPDF library not found. Please verify the CDN script is loaded.");
     return;
   }
+
+  // 1. Create a temporary, hidden print container on the body
+  const tempContainer = document.createElement('div');
+  tempContainer.id = 'pdfTempContainer';
+  tempContainer.style.cssText = `
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+    width: 780px;
+    z-index: -1000;
+  `;
+  document.body.appendChild(tempContainer);
+
+  // 2. Clone cards into pdf-page-container groups of exactly 6 cards
+  const originalCards = document.querySelectorAll('#reportsCardGrid .visual-card');
+  let currentPageContainer = null;
+
+  originalCards.forEach((card, index) => {
+    if (index % 6 === 0) {
+      currentPageContainer = document.createElement('div');
+      currentPageContainer.className = 'pdf-page-container';
+      tempContainer.appendChild(currentPageContainer);
+    }
+    const clonedCard = card.cloneNode(true);
+    currentPageContainer.appendChild(clonedCard);
+  });
+
+  const pageContainers = tempContainer.querySelectorAll('.pdf-page-container');
+  if (pageContainers.length === 0) {
+    tempContainer.remove();
+    return;
+  }
+
+  // Temporarily add pdf-mode class to body to apply PDF specific styles
+  document.body.classList.add('pdf-mode');
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -476,6 +491,10 @@ async function downloadPdfReport() {
   } catch (err) {
     console.error(err);
     alert('Error generating PDF: ' + err.message);
+  } finally {
+    // 3. Cleanup: remove temporary elements and classes
+    document.body.classList.remove('pdf-mode');
+    tempContainer.remove();
   }
 }
 
